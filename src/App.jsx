@@ -53,7 +53,7 @@ function App() {
         </div>
       ) : (
         <Routes>
-          <Route path="/Ducks" element={<Landing onNavigate={handleNavigation} />} />
+          <Route path="/Tech-Ducks" element={<Landing onNavigate={handleNavigation} />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       )}
