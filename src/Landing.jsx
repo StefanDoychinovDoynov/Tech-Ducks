@@ -1,72 +1,33 @@
-import React, { useState, useEffect } from "react";
-import './App.css'; // Import your CSS
-import duckyImage from './ducky.png'; // Ensure this path is correct
+import React from "react";
+import { Link } from "react-router-dom";
+import duckyImage from './ducky.png';
+import codeImage from './code.png';
 
-const NUM_IMAGES = 25; // Number of images to animate
-
-function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false); // Set loading to false after the timer ends
-      console.log("Loading complete."); // Log when loading is complete
-    }, 6500); // 5 seconds loading time to ensure all ducks exit the screen
-    return () => clearTimeout(timer); // Cleanup on component unmount
-  }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      console.log("Scrolling to landing page."); // Log before scrolling
-      window.scrollTo({
-        top: document.getElementById('landing-page').offsetTop,
-        behavior: 'smooth',
-      });
-    }
-  }, [loading]);
-
-  const images = Array.from({ length: NUM_IMAGES }, (_, index) => index);
-
+function Landing({ onNavigate }) {
   return (
-    <div>
-      {loading && (
-        <div className="loading-screen">
-          <div className="animation-container">
-            {images.map((_, index) => {
-              console.log(`Creating duck ${index}`); // Log each duck creation
-              return (
-                <img
-                  key={index}
-                  src={duckyImage} // Use the imported ducky image
-                  alt={`Ducky ${index + 1}`}
-                  className="animated-image"
-                  style={{ 
-                    left: `${Math.floor(Math.random() * 100) - 52}vw`,
-                    animationDelay: `${index * 0.125}s`
-                  }} // Adjust the delay and left position
-                />
-              );
-            })}
-          </div>
+    <div className="landing-page">
+      <header className="Header">
+        <img id="Logo" src={duckyImage} alt="Logo" />
+        <h1 id="Title">Tech Ducks</h1>
+        <nav className="Menu">
+          <Link id="WorkButton" to="/">Work</Link>
+          <button id="ContactButton" onClick={() => onNavigate('/contact')}>Contact</button>
+        </nav>
+      </header>
+      <div className="first">
+        <p id="Phrase">We develop, we design,<br />we don't duck around!</p>
+        <div className="demo-code-container">
+          <img
+            id="DemoCodeImg"
+            src={codeImage}
+            alt="Demo Code"
+            className="demo-code-img"
+          />
         </div>
-      )}
-      {!loading && (
-        <div id="landing-page" className="landing-page">
-          <div className="Header">
-            <img id="Logo" src={duckyImage} alt="Logo" />
-            <p id="Title">Tech Ducks</p>
-            <div className="Menu">
-              <a id="WorkButton" href="Work">Work</a>
-              <a id="ContactButton" href="Contact">Contact</a>
-            </div>
-          </div>
-          <div className="first">
-            <p id="Phrase">We develop, we design,<br />we don't duck around</p>
-          </div>
-        </div>
-      )}
+        <p id="TextImg">We build your dreams into reality.</p>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default Landing;
